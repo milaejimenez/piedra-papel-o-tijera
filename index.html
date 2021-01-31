@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Rock, Paper, Scissors</title>
+	<title>Piedra, papel o tijera</title>
 </head>
 <body>
+	<button id="piedra">Piedra</button>
+	<button id="papel">Papel</button>
+	<button id="tijera">Tijera</button>
+	<div id="results"><div>
 	<h1></h1>
+	
+
 	<script>
 
+const btn1 = document.querySelector('#piedra');
+const btn2 = document.querySelector('#papel');
+const btn3 = document.querySelector('#tijera');
+
 let scoreComputer = 0;
-let scorePlayer = 0;
+let scorePlayer = 0
+let ties = 0;
+let result = '';
 		
 function computerPlay() {
   let randomNumber = Math.floor(Math.random() * 3);
-  switch (randomNumber) {
-    case 0:
-      return "ROCK";
-    case 1:
-      return "PAPER";
-    case 2:
-      return "SCISSORS";
-  }
+  if (randomNumber === 0) return "piedra";
+  if (randomNumber === 1) return "papel";
+  if (randomNumber === 2) return "tijera";
 };
 
-let playRound = function(playerSelection, computerSelection) {
+const playRound = function(playerSelection, computerSelection) {
 	if (
-	    (playerSelection === "ROCK" && computerSelection === "SCISSORS") ||
-	    (playerSelection === "SCISSORS" && computerSelection === "PAPER") ||
-	    (playerSelection === "PAPER" && computerSelection === "ROCK")
+	    (playerSelection === "piedra" && computerSelection === "tijera") ||
+	    (playerSelection === "tijera" && computerSelection === "piedra") ||
+	    (playerSelection === "papel" && computerSelection === "piedra")
 	  ) {
 	    scorePlayer += 1;
 		result = `You win. ${playerSelection} beats ${computerSelection}`
 	  } else if (
-	    (computerSelection === "ROCK" && playerSelection === "SCISSORS") ||
-	    (computerSelection === "SCISSORS" && playerSelection === "PAPER") ||
-	    (computerSelection === "PAPER" && playerSelection === "ROCK")
+	    (computerSelection === "piedra" && playerSelection === "tijera") ||
+	    (computerSelection === "tijera" && playerSelection === "papel") ||
+	    (computerSelection === "papel" && playerSelection === "piedra")
 	  ) {
 	    scoreComputer += 1;
 	    result = `You lost. ${computerSelection} beats ${playerSelection}`
   	  } else if (playerSelection === computerSelection) {
   	  	result = `It's a tie. You both chose ${computerSelection}.`
+  	  	ties += 1
   	  }
+  	let resultRound = document.createElement('h2');
+	resultRound.textContent = result
+	const div = document.querySelector('div');
+	div.appendChild(resultRound)
 }
 
+btn1.addEventListener('click', ()=>{playRound("piedra", computerPlay())});
 
+btn2.addEventListener('click', ()=>{playRound("papel", computerPlay())});
 
-function game() {
-	for (let i = 0; i < 5; i++) {
-		let playerSelection = prompt('Choose rock, paper or scissors').toUpperCase();
-		let computerSelection = computerPlay();
-		playRound(playerSelection, computerSelection);
-	}
-	const results = `You won ${scorePlayer} rounds and the computer won ${scoreComputer} rounds.`;
-	const h1 = document.querySelector('h1');
-	h1.textContent = results
-}
-
-game()
-
+btn3.addEventListener('click', ()=>{playRound("tijera", computerPlay())});
 
 	</script>
 </body>

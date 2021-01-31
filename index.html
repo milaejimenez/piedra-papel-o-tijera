@@ -4,15 +4,22 @@
 	<title>Piedra, papel o tijera</title>
 </head>
 <body>
-	<button id="piedra">Piedra</button>
-	<button id="papel">Papel</button>
-	<button id="tijera">Tijera</button>
+	<div class="container">
+		<div class="buttons">
+			<button id="piedra">Piedra</button>
+			<button id="papel">Papel</button>
+			<button id="tijera">Tijera</button>
+		</div>
+	</div>
 	<div id="results"><div>
 	<h1></h1>
 	
 
 	<script>
 
+const div = document.querySelector('#results');
+const buttons = document.querySelector('.buttons');
+const container = document.querySelector('.container')
 const btn1 = document.querySelector('#piedra');
 const btn2 = document.querySelector('#papel');
 const btn3 = document.querySelector('#tijera');
@@ -21,44 +28,80 @@ let scoreComputer = 0;
 let scorePlayer = 0
 let ties = 0;
 let result = '';
+let endResult = ''
 		
 function computerPlay() {
   let randomNumber = Math.floor(Math.random() * 3);
-  if (randomNumber === 0) return "piedra";
-  if (randomNumber === 1) return "papel";
-  if (randomNumber === 2) return "tijera";
+  if (randomNumber === 0) return "Piedra";
+  if (randomNumber === 1) return "Papel";
+  if (randomNumber === 2) return "Tijera";
 };
 
 const playRound = function(playerSelection, computerSelection) {
 	if (
-	    (playerSelection === "piedra" && computerSelection === "tijera") ||
-	    (playerSelection === "tijera" && computerSelection === "piedra") ||
-	    (playerSelection === "papel" && computerSelection === "piedra")
+	    (playerSelection === "Piedra" && computerSelection === "Tijera") ||
+	    (playerSelection === "Tijera" && computerSelection === "Piedra") ||
+	    (playerSelection === "Papel" && computerSelection === "Piedra")
 	  ) {
 	    scorePlayer += 1;
-		result = `You win. ${playerSelection} beats ${computerSelection}`
+		result = `Ganaste. ${playerSelection} le gana a ${computerSelection}.
+		Tus puntos: ${scorePlayer}.
+		Los puntos de la computadora: ${scoreComputer}`
 	  } else if (
-	    (computerSelection === "piedra" && playerSelection === "tijera") ||
-	    (computerSelection === "tijera" && playerSelection === "papel") ||
-	    (computerSelection === "papel" && playerSelection === "piedra")
+	    (computerSelection === "Piedra" && playerSelection === "Tijera") ||
+	    (computerSelection === "Tijera" && playerSelection === "Papel") ||
+	    (computerSelection === "Papel" && playerSelection === "Piedra")
 	  ) {
 	    scoreComputer += 1;
-	    result = `You lost. ${computerSelection} beats ${playerSelection}`
+	    result = `Perdiste. ${computerSelection} le gana a ${playerSelection}.
+	    Tus puntos: ${scorePlayer}.
+		Los puntos de la computadora: ${scoreComputer}.`
   	  } else if (playerSelection === computerSelection) {
-  	  	result = `It's a tie. You both chose ${computerSelection}.`
+  	  	result = `Es un empate. Los dos eligieron ${computerSelection}.
+  	  	Tus puntos: ${scorePlayer}.
+		Los puntos de la computadora: ${scoreComputer}.`
   	  	ties += 1
   	  }
-  	let resultRound = document.createElement('h2');
-	resultRound.textContent = result
-	const div = document.querySelector('div');
-	div.appendChild(resultRound)
+
+  	  getResults()
+  	  
+  	  if (scoreComputer == 5 || scorePlayer == 5) {
+  	  	endGame()
+  	  }
 }
 
-btn1.addEventListener('click', ()=>{playRound("piedra", computerPlay())});
+function getResults() {
+	let resultRound = document.createElement('h2');
+	resultRound.textContent = result;
+	div.appendChild(resultRound);
+}
 
-btn2.addEventListener('click', ()=>{playRound("papel", computerPlay())});
+function getEndResult() {
+	if (ties == 5) {
+		endResult = `Es un empate! Los dos tienen ${scorePlayer} puntos.`
+	} else if (scoreComputer == 5) {
+		endResult = `La computadora gana con ${scoreComputer} puntos!`
+	} else if (scorePlayer = 5) {
+		endResult = `Ganaste con ${scorePlayer} puntos!`
+	}
+}
 
-btn3.addEventListener('click', ()=>{playRound("tijera", computerPlay())});
+
+function endGame() {
+  getEndResult()
+  container.removeChild(buttons);
+  let resultGame = document.createElement('h1');
+  resultGame.textContent = endResult;
+  div.appendChild(resultGame);
+ }
+
+
+
+btn1.addEventListener('click', ()=>{playRound("Piedra", computerPlay())});
+
+btn2.addEventListener('click', ()=>{playRound("Papel", computerPlay())});
+
+btn3.addEventListener('click', ()=>{playRound("Tijera", computerPlay())});
 
 	</script>
 </body>

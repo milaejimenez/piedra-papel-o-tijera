@@ -2,9 +2,9 @@
 const div = document.querySelector('#results');
 const buttons = document.querySelector('.buttons');
 const container = document.querySelector('.container')
-const btn1 = document.querySelector('#rock');
+const btn1 = document.querySelector('#scissor');
 const btn2 = document.querySelector('#paper');
-const btn3 = document.querySelector('#scissor');
+const btn3 = document.querySelector('#rock');
 
 let scoreComputer = 0;
 let scorePlayer = 0
@@ -90,10 +90,10 @@ function refreshPage(event){
 
 
 
-btn1.addEventListener('click', ()=>{playRound("Piedra", computerPlay())});
+btn1.addEventListener('click', ()=>{playRound("Tijera", computerPlay())});
 
 btn2.addEventListener('click', ()=>{playRound("Papel", computerPlay())});
 
-btn3.addEventListener('click', ()=>{playRound("Tijera", computerPlay())});
+btn3.addEventListener('click', ()=>{playRound("Piedra", computerPlay())});
 
 document.addEventListener('click', refreshPage);
